@@ -143,6 +143,7 @@ def TrainModel( model, criterion, scheduler, num_epochs = 25):
                 labels =  Variable(labels)
                 
                 optimizer_ft.zero_grad()
+                #forward
                 outputs = model(inputs)
                 _,predicted = torch.max(outputs, 1)
                 loss = criterion(outputs, labels)
