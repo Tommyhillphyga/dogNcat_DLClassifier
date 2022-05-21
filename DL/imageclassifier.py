@@ -80,6 +80,7 @@ optimizer_ft = optim.SGD(model.parameters(), lr= learning_rate, momentum=0.9)
 exp_scheduler = lr_scheduler.StepLR(optimizer= optimizer_ft, step_size=7, gamma= 0.1)
 
 def TrainModel(model, criterion, schedular, optimizer, num_epoch = 25):
+    print( 'model trainig begins....')
     since = time.time()
     best_model = model.state_dict()
     best_accuracy = 0.0
@@ -138,12 +139,42 @@ def TrainModel(model, criterion, schedular, optimizer, num_epoch = 25):
 
     #load best model weights
     model.load_state_dict(best_model)
+    
+    #save the model
+    # torch.save(best_model, '/content/drive/MyDrive/DL/model.pth')
     return model
 
+# test model on test dataset
 
+def Testmodel():
+  print('model testing begins...')
+  #load model
+  msg = 'test completed'
+  device = torch.device('cpu')
+  loaded_model = model
+  loaded_model.load_state_dict(torch.load('/content/drive/MyDrive/DL/model.pth', map_location=device))
+  #loaded_model = loaded_model.to(device)
+  loaded_model.eval()
+
+  running_correct = 0
+  total = 0
+  
+  with torch.no_grad():
+    for data in dataloaders['test']:
+      inputs, labels = data
+      inputs = Variable(inputs)
+      labels = Variable(labels)
+
+      outputs = loaded_model(inputs)
+      _,predicted = torch.max(outputs.data, 1)
+      
+      total += labels.size(0)
+      running_correct += torch.sum(predicted == labels)
+
+  print(f'Accuracy of the network on the 2000 test images: {100 * running_correct / total} %')
+  return msg
 
 
 if __name__ == '__main__':
-    print( 'model trainig begins....')
-    TrainModel(model, criterion=criterion, schedular = exp_scheduler, optimizer=optimizer_ft)
-    
+    print()
+    # TrainModel(model, criterion=criterion, schedular = exp_scheduler, optimizer=optimizer_ft)
