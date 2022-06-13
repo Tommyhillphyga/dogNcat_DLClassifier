@@ -54,7 +54,7 @@ def import_classify (image, model):
 
 def main():
     model = load_model()
-    file = st.file_uploader("please upload an image", type = ['jpg', 'png'])
+    file = st.file_uploader("please upload an image", type = ['jpg', 'png', 'jpeg'])
     if file is None:
         st.text('please upload an image')
     else:
