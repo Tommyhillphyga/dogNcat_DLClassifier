@@ -37,7 +37,7 @@ def load_model():
     model.fc = nn.Linear(num_ft, 2)
 
     loaded_model = model
-    loaded_model.load_state_dict(torch.load('model.pth', map_location=device))
+    loaded_model.load_state_dict(torch.load('DL/model.pth', map_location=device))
     loaded_model.eval()
     return loaded_model
 
