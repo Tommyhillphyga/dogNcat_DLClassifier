@@ -41,7 +41,7 @@ def load_model():
     loaded_model.eval()
     return loaded_model
 
-st.title("Cat and Dog Classification")
+st.title("Cat and Dog Classifier App")
  
 
 
