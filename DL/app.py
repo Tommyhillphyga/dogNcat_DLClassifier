@@ -37,7 +37,7 @@ def load_model():
     model.fc = nn.Linear(num_ft, 2)
 
     loaded_model = model
-    loaded_model.load_state_dict(torch.load('./model.pth', map_location=device))
+    loaded_model.load_state_dict(torch.load('model.pth', map_location=device))
     loaded_model.eval()
     return loaded_model
 
@@ -46,16 +46,13 @@ st.title("Cat and Dog Classification")
 
 
 def import_classify (image, model):
-    
     with torch.no_grad():
         input = Variable(image)
         output = model(input)
         _,predicted = torch.max(output.data, 1)
-
     return predicted[0]
 
 def main():
-
     model = load_model()
     file = st.file_uploader("please upload an image", type = ['jpg', 'png'])
     if file is None:
